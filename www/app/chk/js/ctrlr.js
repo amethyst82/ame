@@ -1,16 +1,17 @@
 angular.module('Chk_Ctrlr', ['ionic'])
 
-.controller('ChkTabCtrl', function($scope) {
+.controller('ChkTabCtrl', function($scope, $rootScope) {
   console.log('ChkTabCtrl');
   
-  $scope.test = "111";
+  $scope.user = $rootScope.user;
   
 })
 
 
-.controller('ChkDetailCtrl', function($scope, $stateParams) {
+.controller('ChkDetailCtrl', function($scope, $rootScope, $stateParams) {
   console.log('ChkDetailCtrl');
   
+  $scope.user = $rootScope.user;
   $scope.test = $stateParams.chk_id;
   
 });
