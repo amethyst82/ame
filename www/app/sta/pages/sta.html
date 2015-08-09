@@ -1,15 +1,28 @@
 <ion-view view-title="统计">
   <ion-content padding="true">
-    <h3>Create hybrid mobile apps with the web technologies you love.</h3>
-    <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
-    <p>Built with Sass and optimized for AngularJS.</p>
-    
-    
-    <!-- 
     <p>
-      <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
+      <a class="button icon icon-right ion-chevron-right" >Tabs Nav Stack</a>
     </p>
-     -->
-    
+    <div id="barChart" class="epoch category10" style="width: 300px; height: 100px; border:1px solid black;"></div>
+	<script>
+	
+	var barChartData = [
+         {
+           label: 'Series 1',
+           values: [
+             { x: '老张', y: 30 },
+             { x: '老李', y: 10 },
+             { x: '老王', y: 12 },
+           ]
+         },
+
+       ];
+	  
+	  var areaChartInstance = $('#barChart').epoch({
+		    type: 'bar',
+		    data: barChartData,
+		    axes: ['left', 'right', 'bottom']
+		});
+	</script>
   </ion-content>
 </ion-view>

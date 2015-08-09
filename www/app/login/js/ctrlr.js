@@ -4,8 +4,13 @@ angular.module('Sign_Ctrlr', ['ionic'])
   
   $scope.signIn = function(user) {
     console.log('Sign-In', user);
-    $rootScope.user = user;
-    $state.go('tabs.chk');
+    
+    if(!user || !user.username || !user.password){
+    	alert("登录失败！");
+    }else{
+	    $rootScope.user = user;
+	    $state.go('tabs.chk');
+    }
   };
   
 });
