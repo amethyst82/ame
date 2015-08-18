@@ -75,8 +75,24 @@ angular.module('Sta_Ctrlr', ['ionic', 'nvd3ChartDirectives'])
 		$scope.staScope.displayDetail = false;
 	}
 	
+	$scope.staScope.colors = [
+	                          "#E01B5D",
+	                          "#4AA02C",
+	                          "#FFFF00",
+	                          ]
+	
+	$scope.staScope.colorFunction = function() {
+		return function(d, i) {
+			console.log("color index: ", i);
+			return $scope.staScope.colors[i];
+	    		
+	    };
+	}
+	
 	$scope.staScope.whichIChosen = function(){
 		$scope.staScope.displayDetail = true;
+		
+		removeExtraLegend();
 		
 		/*
 		console.log("now chosen", JSON.stringify($scope.staScope.choosen));
@@ -97,6 +113,22 @@ angular.module('Sta_Ctrlr', ['ionic', 'nvd3ChartDirectives'])
 															'</nvd3-cumulative-line-chart>';
 															
 		*/
+	}
+	
+	var removeExtraLegend = function(){
+		var textElements = document.getElementsByTagName("text");
+		for(var i=0; i<textElements.length; i++){
+//			console.log(textElements[i].innerHTML);
+			
+			if("Re-scale y-axis" == textElements[i].innerHTML){
+				var removeTargetDOM = textElements[i].parentNode;
+				removeTargetDOM.parentNode.removeChild(removeTargetDOM);
+				
+			}
+			
+		}
+		
+		
 	}
 	
 			
