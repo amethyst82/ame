@@ -1,28 +1,63 @@
 <ion-view view-title="统计">
   <ion-content padding="true">
-    <p>
-      <a class="button icon icon-right ion-chevron-right" >Tabs Nav Stack</a>
-    </p>
-    <div id="barChart" class="epoch category10" style="width: 300px; height: 100px; border:1px solid black;"></div>
-	<script>
-	
-	var barChartData = [
-         {
-           label: 'Series 1',
-           values: [
-             { x: '老张', y: 30 },
-             { x: '老李', y: 10 },
-             { x: '老王', y: 12 },
-           ]
-         },
-
-       ];
-	  
-	  var areaChartInstance = $('#barChart').epoch({
-		    type: 'bar',
-		    data: barChartData,
-		    axes: ['left', 'right', 'bottom']
-		});
-	</script>
+		<div class="list">
+			<label class="item item-input item-select" ng-show="!staScope.displayDetail">
+				<div class="input-label"> Lightsaber</div>
+				<select ng-model="staScope.choosen" ng-options="s.name for s in staScope.telr" ng-change="changeEverything();"></select>
+			</label>
+		  
+			<button class="button" ng-click="staScope.whichIChosen()" ng-show="!staScope.displayDetail">
+			  I chosen which one
+			</button>
+			<button class="button" ng-click="staScope.hiddenChart()" ng-show="staScope.displayDetail">
+			  I Hidden all charts
+			</button>
+		</div>
+		
+		<label class="item item-input item-label" ng-show="staScope.displayDetail"> {{staScope.choosen.name}}</label>
+		<div class="item" style="padding:0" ng-show="staScope.displayDetail">
+			<nvd3-cumulative-line-chart
+				data="staScope.choosen.sta"
+				id="exampleId"
+				width="500"
+				height="350"
+				showXAxis="true"
+				showYAxis="true"
+				showLegend="true"
+				yAxisTickFormat="yAxisTickFormatFunction()"
+				xAxisTickFormat="xAxisTickFormatFunction()"
+				margin="{left:70,top:70,bottom:70,right:125}">
+				<svg></svg>
+			</nvd3-cumulative-line-chart>
+		</div>
+		<!--
+		<nvd3-cumulative-line-chart
+			data="staScope.choosen1.sta"
+			id="exampleId1"
+			width="500"
+			height="350"
+			showXAxis="true"
+			showYAxis="true"
+			showLegend="true"
+			yAxisTickFormat="yAxisTickFormatFunction()"
+			xAxisTickFormat="xAxisTickFormatFunction()"
+			margin="{left:70,top:70,bottom:70,right:125}">
+			<svg></svg>
+		</nvd3-cumulative-line-chart>
+		
+		<nvd3-cumulative-line-chart
+			data="staScope.choosen2.sta"
+			id="exampleId2"
+			width="500"
+			height="350"
+			showXAxis="true"
+			showYAxis="true"
+			showLegend="true"
+			yAxisTickFormat="yAxisTickFormatFunction()"
+			xAxisTickFormat="xAxisTickFormatFunction()"
+			margin="{left:70,top:70,bottom:70,right:125}">
+			<svg></svg>
+		</nvd3-cumulative-line-chart>
+		-->
   </ion-content>
 </ion-view>
