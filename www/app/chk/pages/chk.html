@@ -1,11 +1,19 @@
-<ion-view view-title="{{user.username}}">
+<ion-view view-title="{{user.name}}">
   <ion-content padding="true">
-    <p>Example of Ionic tabs. Navigate to each tab, and
-    navigate to child views of each tab and notice how
-    each tab has its own navigation history.</p>
-    <p>
-      <a class="button icon icon-right ion-chevron-right" href="/#/tab/detail/888">明细</a>
-      <input type = "text" ng-model = "user.username"/>
-    </p>
+  	<ul class = "list">
+      <li class="item" ng-repeat="item in items">
+          <label class="toggle toggle-calm" style = "float:left;margin:0">
+		       <input type="checkbox" ng-model="item.status" ng-checked="item.status==1">
+		       <div class="track">
+		         <div class="handle"></div>
+		       </div>
+		     	</label>
+		     	
+		     	<label style = "float:left;padding:10px 0 0 5px;" ng-bind = "item.transactionName"></label>
+		     	
+		     	<i class="button icon-right ion-chevron-right" style="float:right" ng-click="show_detail({{item}})">明细</i>
+		     	
+        </li>
+    </ul>
   </ion-content>
 </ion-view>

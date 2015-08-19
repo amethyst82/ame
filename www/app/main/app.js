@@ -1,6 +1,63 @@
-angular.module('cobdApp', ['ionic', 'Chk_Ctrlr', 'Sign_Ctrlr', 'Sta_Ctrlr'])
+var dep = [
+	'ionic', 
+	'ngCordova', 
+	'ngLodash', 
+	'restangular', 
+	'Chk_Ctrlr', 
+	'Sign_Ctrlr', 
+	'Sta_Ctrlr',
+	];
 
-.config(function($stateProvider, $urlRouterProvider) {
+angular.module('cobdApp', dep)
+
+.run(function($ionicPlatform) {
+	  $ionicPlatform.ready(function() {
+	    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+	    // for form inputs)
+	    if(window.cordova && window.cordova.plugins.Keyboard) {
+	      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+	    }
+	    if(window.StatusBar) {
+	      StatusBar.styleDefault();
+	    }
+	  });
+	})
+
+.config(function($stateProvider, $ionicConfigProvider, $urlRouterProvider, RestangularProvider, $locationProvider) {
+	RestangularProvider.setBaseUrl('http://127.0.0.1:8080/PricingCenter/api/');
+	
+	RestangularProvider.addResponseInterceptor(
+	   function(data, operation, what, url, response, deferred) {
+	
+		   $locationProvider.authToken = response.headers('authorization');
+		   console.log('Authorization Headers: ' + $locationProvider.authToken);
+	
+		   return data.data;
+	   }
+	 );
+	
+	RestangularProvider.setDefaultHeaders({
+	  Authorization: $locationProvider.authToken
+	 });
+	
+	RestangularProvider.addFullRequestInterceptor(
+	   function (element, operation, route, url, headers, params, httpConfig) {
+	    console.log('Intercepting request: ' + $locationProvider.authToken);
+	
+	 headers['Authorization'] = $locationProvider.authToken;
+	   }
+	 );
+	
+	
+	$ionicConfigProvider.tabs.position('bottom');
+	$ionicConfigProvider.tabs.style('standard');
+	$ionicConfigProvider.views.transition('ios');
+	$ionicConfigProvider.navBar.alignTitle('center');
+	$ionicConfigProvider.form.checkbox("circle");
+	$ionicConfigProvider.form.toggle('large');
+	$ionicConfigProvider.navBar.positionPrimaryButtons('left');
+	$ionicConfigProvider.navBar.positionSecondaryButtons('right');
+	$ionicConfigProvider.backButton.icon('ion-ios-arrow-back');
 
   $stateProvider
     .state('signin', {
@@ -28,7 +85,7 @@ angular.module('cobdApp', ['ionic', 'Chk_Ctrlr', 'Sign_Ctrlr', 'Sta_Ctrlr'])
       }
     })
     .state('tabs.detail', {
-      url: '/detail/:chk_id',
+      url: '/detail/:item',
       views: {
         'tab-chk': {
           templateUrl: 'app/chk/pages/detail.html',
@@ -48,14 +105,4 @@ angular.module('cobdApp', ['ionic', 'Chk_Ctrlr', 'Sign_Ctrlr', 'Sta_Ctrlr'])
 
    $urlRouterProvider.otherwise('/sign-in');
 
-})
-
-.controller('FootCtrl', function($scope, $state) {
-	console.log('FootCtrl');
-	$scope.foot_switch = function(target){
-		console.log(target);
-		$state.go(target);
-		
-	}
-	
 });

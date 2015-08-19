@@ -39,6 +39,5 @@
   },
   "_source": "git://github.com/rockabox/ng-lodash.git",
   "_target": "~0.2.3",
-  "_originalSource": "ng-lodash",
-  "_direct": true
+  "_originalSource": "ng-lodash"
 }
